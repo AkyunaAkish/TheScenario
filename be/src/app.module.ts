@@ -20,4 +20,5 @@ import { DataDao } from './data.dao';
     DataDao
   ],
 })
+
 export class AppModule {}

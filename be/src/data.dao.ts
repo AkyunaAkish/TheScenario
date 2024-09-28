@@ -3,17 +3,14 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Data } from "./data.db";
 
-
-
 @Injectable()
 export class DataDao {
 
     constructor(
         @InjectModel(Data.name, "local")
         private dataModel: Model<Data>,
-    ) {
+    ) { }
 
-    }
     async get(id: string) {
         return this.dataModel.findById(id);
     }
@@ -22,11 +19,15 @@ export class DataDao {
         return this.dataModel.find();
     }
 
-    async create(data: Data) {
+    async create(data: { data: string }) {
         await this.dataModel.create(data);
     }
 
     async delete(id: string) {
-        await this.dataModel.deleteOne({_id: id})
+        await this.dataModel.deleteOne({ _id: id });
+    }
+
+    async update(id: string, newState: Data) {
+        await this.dataModel.updateOne({ _id: id }, newState);
     }
 }
